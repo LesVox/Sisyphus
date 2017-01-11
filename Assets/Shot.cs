@@ -15,8 +15,17 @@ public class Shot : MonoBehaviour {
 	
 	}
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter2D(Collider2D col)
     {
+        Debug.Log("DEDD");      
+        if(col.gameObject.GetComponent<Enemy>() != null)
+        {
+            col.gameObject.GetComponent<Enemy>().health -= damage;
+        }
+        if (col.gameObject.GetComponent<PlayerControl>() == null)
+        {
+            Destroy(this.gameObject);
+        }
         
     }
 }

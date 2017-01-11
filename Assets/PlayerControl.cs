@@ -18,6 +18,7 @@ public class PlayerControl : MonoBehaviour {
 
     int healthMax = 10;
     public int health = 10;
+    public int baseDmg = 2;
 
     public GameObject shotPrefab;
 
@@ -42,7 +43,7 @@ public class PlayerControl : MonoBehaviour {
         }
         else
         {
-            moveVel = 50f;
+            moveVel = 40f;
         }
 
         if (shootCD > 0)
@@ -88,9 +89,9 @@ public class PlayerControl : MonoBehaviour {
         }
         if (shoot)
         {
-            Debug.Log("Bomb");
             var shot = (GameObject)Instantiate(shotPrefab, (transform.position + (Vector3.right * lastFacing).normalized / 8), Quaternion.identity);
-            shot.GetComponent<Rigidbody2D>().velocity = (Vector3.right * lastFacing).normalized * 5;
+            shot.GetComponent<Rigidbody2D>().velocity = (Vector3.right * lastFacing).normalized * 6;
+            shot.GetComponent<Shot>().damage = baseDmg;
             Destroy(shot, 2.0f);
             shoot = false;
             shootCD = shootCDMax;
@@ -102,10 +103,11 @@ public class PlayerControl : MonoBehaviour {
     {
         facingRight = !facingRight;
 
-        Vector3 sprScale = transform.localScale;
-        sprScale.x *= -1;
+        //Vector3 sprScale = transform.localScale;
+        //sprScale.x *= -1;
+        //transform.localScale = sprScale;
         lastFacing *= -1;
-        transform.localScale = sprScale;
+        GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;
     }
     
 }
